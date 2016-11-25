@@ -1,0 +1,1 @@
+gunicorn -c ../etc/qa.py ask.wsgi
