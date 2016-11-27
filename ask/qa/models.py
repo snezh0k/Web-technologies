@@ -9,7 +9,7 @@ class Question(models.Model):
     added_at = models.DateTimeField(blank=True, auto_now_add=True)
     rating = models.IntegerField()
     author = models.OneToOneField(User, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(User, related_name = 'question_like_author')
+    likes = models.ManyToManyField(User, related_name = 'question_like_author', default = 'x')
     def __unicode__(self):
         return self.title
     def get_absolute_url(self):
