@@ -13,7 +13,7 @@ class Question(models.Model):
     added_at = models.DateTimeField(blank=True)
     rating = models.IntegerField()
     autor = models.OneToOneField(Autor, on_delete=models.CASCADE)
-    likes = Likes.objects.filter(attitude=True)
+    likes = models.ManyToManyField(Autor, related_name = 'question_like_autor')
     def __unicode__(self):
         return self.title
     def get_absolute_url(self):
@@ -30,11 +30,6 @@ class Answer(models.Model):
     class Meta:
         db_table = 'qa_answer'
         ordering = ['-added_at']
-
-class Likes(models.Model):
-    user = models.ForeignKey(Autor)
-    question = models.ForeignKey(Question)
-    attitude = models.BooleanField()
 
 class QuestionManager(models.Manager):
     def get_new(self):
