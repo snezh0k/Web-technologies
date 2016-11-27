@@ -26,8 +26,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_PROFILE_MODULE = 'accounts.Autor'
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -61,8 +59,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ask',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'snezhh',
+        'PASSWORD': 'snezhh',
         'HOST': 'localhost',
     }
 }

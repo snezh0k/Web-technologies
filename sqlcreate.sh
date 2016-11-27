@@ -1,5 +1,5 @@
 mysql -u root -e "CREATE DATABASE ask;"
-mysql -u root -e "CREATE USER snezhh"
+mysql -u root -e "CREATE USER snezhh IDENTIFIED BY 'snezhh'"
 mysql -u root -e "GRANT ALL ON *.* TO snezhh;"
 mysql -u root -e "GRANT CREATE ROUTINE ON *.* TO snezhh;"
 mysql -u root -e "GRANT CREATE TABLESPACE ON *.* TO snezhh;"
