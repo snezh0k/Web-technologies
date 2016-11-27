@@ -3,6 +3,10 @@ from datetime import datetime, timedelta, date
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+class Autor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 class Question(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
@@ -27,6 +31,11 @@ class Answer(models.Model):
         db_table = 'qa_answer'
         ordering = ['-added_at']
 
+class Likes(models.Model):
+    user = models.ForeignKey(Autor)
+    question = models.ForeignKey(Question)
+    attitude = models.BooleanField()
+
 class QuestionManager(models.Manager):
     def get_new(self):
         newest = []
@@ -41,10 +50,4 @@ class QuestionManager(models.Manager):
             popular.append(q)
         return popular
         
-class Autor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-class Likes(models.Model):
-    user = models.ForeignKey(Autor)
-    question = models.ForeignKey(Question)
-    attitude = models.BooleanField()
