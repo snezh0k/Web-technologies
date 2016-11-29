@@ -1,0 +1,10 @@
+<html>
+  <h1> {{ question }} </h1>
+  <p> {{ question.text }} </p>
+  <p>
+  <ul>
+  {% for a in answers %}
+  <li> {{ a.text }} </li>
+  {% endfor %}
+  <ul>
+</html>

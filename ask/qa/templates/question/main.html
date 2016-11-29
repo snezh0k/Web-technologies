@@ -1,0 +1,19 @@
+<html>
+  <body>
+    <ul>
+        {% for q in questions %}
+        <li>  
+	  <a href="{{ q.get_absolute_url}}"> {{ q }} </a>
+	</li>
+	{% endfor %}
+	<br>
+	<nav><ul>
+	{% for p in paginator.page_range %}
+	   <li>
+	      <a href="{{ paginator.baseurl }} {{ p }}">{{ p }}</a>
+	   </li>
+	{% endfor %}
+	</ul></nav>
+    </ul>    
+  </body>
+</html> 
