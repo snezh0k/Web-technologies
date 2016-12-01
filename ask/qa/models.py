@@ -17,8 +17,8 @@ class Question(models.Model):
     title = models.CharField(max_length=255, default='', null=True, blank=True)
     text = models.TextField(default='', null=True, blank=True)
     added_at = models.DateTimeField(auto_now_add=True, auto_now=True, null=True, blank=True)
-    rating = models.IntegerField(default=0, null=True)
-    author = models.ForeignKey(User, null=True, default=None)
+    rating = models.IntegerField(default=0, null=True, blank=True)
+    author = models.ForeignKey(User, null=True, default=None, blank=True)
     likes = models.ManyToManyField(User, related_name='user_likes_question', null=True)
     
     def __unicode__(self):
@@ -32,9 +32,9 @@ class Question(models.Model):
         ordering=['-added_at']
 
 class Answer(models.Model):
-    text = models.TextField()
+    text = models.TextField(default=None, null=True, blank=True)
     added_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, null=True, default=True, blank=True)
     author = models.ForeignKey(User, null=True, default=None, blank=True)
     
     class Meta:
