@@ -38,6 +38,9 @@ def show_question(request, qn):
     answers = Answer.objects.all().filter(question=question)
     
     if request.method == "POST":
+        return HttpResponse('OK')
+    
+    if request.method == "POST":
         form = AnswerForm(request.POST, initial={'question':qn})
         if form.is_valid():
             answer = form.save()
@@ -45,7 +48,7 @@ def show_question(request, qn):
             return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial={'question':qn})
-        return render(request, 'question/one.html',
+    return render(request, 'question/one.html',
                   {
                       'question' : question,
                       'answers' : answers,
@@ -72,15 +75,19 @@ def paginate(request, qs):
     return page, paginator
 
 def ask(request):
+
+    if request.method == "POST":
+        return HttpResponse('OK')
+
     if request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
-    elif request.method == "GET":
+    else: 
          form = AskForm()
-         return render(request, 'question/ask.html',
+    return render(request, 'question/ask.html',
                   {
                       'form' : form,
                   })
