@@ -45,8 +45,7 @@ def show_question(request, qn):
             return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial={'question':qn})
-
-    return render(request, 'question/one.html',
+        return render(request, 'question/one.html',
                   {
                       'question' : question,
                       'answers' : answers,
@@ -79,10 +78,9 @@ def ask(request):
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
-    else:
-        form = AskForm()
-    
-    return render(request, 'question/ask.html',
+    elif request.method == "GET":
+         form = AskForm()
+         return render(request, 'question/ask.html',
                   {
                       'form' : form,
                   })
