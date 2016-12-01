@@ -13,7 +13,6 @@
         {{ e }}
   {% endfor %}
   <form method="post" action="/question/{{ qn }}/">
-    {% csrf_token %}
     <fieldset>
       {% for field in form %}
       {% if field.label != "Question" %}

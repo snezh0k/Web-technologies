@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.template import RequestContext
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 from .models import Question
 from .models import Answer
 from .forms import AskForm
 from .forms import AnswerForm
+from django.views.decorators.csrf import requires_csrf_token
 # Create your views here.
 
 def test(request, *args, **kwargs):

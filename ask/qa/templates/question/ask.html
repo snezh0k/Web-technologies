@@ -1,10 +1,10 @@
 <html>
   <body>
-    {% csrf_token %}
     {% for e in form.non_field_error %}
         {{ e }}
     {% endfor %}
-    <form method="post" action="/ask/">     
+    <form method="post" action="/ask/">
+      {% csrf_token %}
       <fieldset>
 	{% for field in form %}
 	  <label> {{ field.label }} </label>
