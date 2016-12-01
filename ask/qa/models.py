@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime, timedelta, date, time
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 
@@ -23,8 +24,8 @@ class Question(models.Model):
     def __unicode__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return 'question/%d/' % self.pk
+    def get_url(self):
+        return reverse('question', kwargs = {'qn': self.pk})
 
     class Meta:
         db_table="qa_question"

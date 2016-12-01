@@ -3,7 +3,7 @@
     <ul>
         {% for q in questions %}
         <li>  
-	  <a href="{{ q.get_absolute_url}}"> {{ q }} </a>
+	  <a href="{{ q.get_url }}"> {{ q }} </a>
 	</li>
 	{% endfor %}
 	<br>
