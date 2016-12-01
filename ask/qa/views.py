@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 from .models import Question
 from .models import Answer
+from .forms import AskForm
+from .forms import AnswerForm
 # Create your views here.
 
 def test(request, *args, **kwargs):
@@ -35,10 +37,22 @@ def show_popular(request):
 def show_question(request, qn):
     question = get_object_or_404(Question, pk=qn)
     answers = Answer.objects.all().filter(question=question)
+    
+    if request.method == "POST":
+        form = AnswerForm(request.POST, initial={'question': qn})
+        if form.is_valid():
+            answer=form.save()
+            url = '/question/'+qn+'/'
+            return HttpResponseRedirect(url)
+    else:
+        form = AnswerForm(initial={'question': qn})
+
     return render(request, 'question/one.html',
                   {
                       'question' : question,
                       'answers' : answers,
+                      'form' : form,
+                      'qn' : qn
                    })
 
 def paginate(request, qs):
@@ -58,3 +72,17 @@ def paginate(request, qs):
     except EmptyPage:
         page = paginator.page(paginator.num_pages)
     return page, paginator
+
+def question_add(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = question.get_absolute_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'question/ask.html',
+                  {
+                      'form' : form,
+                  })

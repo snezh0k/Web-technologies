@@ -13,12 +13,12 @@ class QuestionManager(models.Manager):
 
 class Question(models.Model):
     objects = QuestionManager()
-    title = models.CharField(max_length=255, default='')
-    text = models.TextField(default='')
-    added_at = models.DateTimeField(auto_now_add=True)
-    rating = models.IntegerField(default=0)
-    author = models.ForeignKey(User)
-    likes = models.ManyToManyField(User, related_name='user_likes_question')
+    title = models.CharField(max_length=255, default='', null=True, blank=True)
+    text = models.TextField(default='', null=True, blank=True)
+    added_at = models.DateTimeField(auto_now_add=True, auto_now=True, null=True, blank=True)
+    rating = models.IntegerField(default=0, null=True)
+    author = models.ForeignKey(User, null=True, default=None)
+    likes = models.ManyToManyField(User, related_name='user_likes_question', null=True)
     
     def __unicode__(self):
         return self.title
@@ -32,9 +32,9 @@ class Question(models.Model):
 
 class Answer(models.Model):
     text = models.TextField()
-    added_at = models.DateTimeField(auto_now_add=True)
+    added_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     question = models.ForeignKey(Question)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, null=True, default=None, blank=True)
     
     class Meta:
         db_table="qa_answer"
