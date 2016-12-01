@@ -9,22 +9,13 @@
   <ul>
   <br>
   <p>
-  {% for e in form.non_field_error %}
-        {{ e }}
-  {% endfor %}
-  <form method="post" action="/question/{{ qn }}/">
-    {% csrf_token %}
+  <form method="post" action="/question/{{ qn }}/">{% csrf_token %}
     <fieldset>
       {% for field in form %}
-      {% if field.label != "Question" %}
-      <label> {{ field.label }} </label>
-          {{ field }}
-      {% else %}
-          {{ field }}
-      {% endif %}
+      {{ field }}
       {% endfor %}
     </fieldset>
-    <button type="submit"> Submit </button>
+    <button type="submit"> submit </button>
   </form>
   </body>
 </html>

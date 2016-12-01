@@ -1,12 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from django.template import RequestContext
+from django.middleware import csrf
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
-from .models import Question
-from .models import Answer
-from .forms import AskForm
-from .forms import AnswerForm
-from django.views.decorators.csrf import requires_csrf_token
+from .models import Question, Answer
+from .forms import AskForm, AnswerForm
 # Create your views here.
 
 def test(request, *args, **kwargs):
@@ -23,11 +20,12 @@ def home(request):
                       'paginator' : paginator,
                    })
 
+
 def show_popular(request):
     questions = Question.objects.popular()
     page, paginator = paginate(request, questions)
     paginator.baseurl = '/popular/?page='
-    
+
     return render(request, 'question/main.html',
                   {
                   'questions' : page.object_list,
@@ -35,27 +33,25 @@ def show_popular(request):
                   'paginator' : paginator,
                   })
         
-
 def show_question(request, qn):
     question = get_object_or_404(Question, pk=qn)
     answers = Answer.objects.all().filter(question=question)
     
     if request.method == "POST":
-        form = AnswerForm(request.POST, initial={'question': qn})
+        form = AnswerForm(request.POST, initial={'question':qn})
         if form.is_valid():
-            answer=form.save()
-            url = '/question/'+qn+'/'
+            answer = form.save()
+            url = '/question/' + qn + '/'
             return HttpResponseRedirect(url)
     else:
-        form = AnswerForm(initial={'question': qn})
-        return HttpResponse(status=200)
+        form = AnswerForm(initial={'question':qn})
 
     return render(request, 'question/one.html',
                   {
                       'question' : question,
                       'answers' : answers,
                       'form' : form,
-                      'qn' : qn
+                      'qn' : qn,
                    })
 
 def paginate(request, qs):
@@ -76,7 +72,7 @@ def paginate(request, qs):
         page = paginator.page(paginator.num_pages)
     return page, paginator
 
-def question_add(request):
+def ask(request):
     if request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
@@ -85,8 +81,9 @@ def question_add(request):
             return HttpResponseRedirect(url)
     else:
         form = AskForm()
-        return HttpResponse(status=200)
-
+    
+  #  csrf_token = csrf._get_new_csrf_key()
+    
     return render(request, 'question/ask.html',
                   {
                       'form' : form,
