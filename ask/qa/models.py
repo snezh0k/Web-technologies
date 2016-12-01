@@ -24,7 +24,7 @@ class Question(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return '/question/%d/' % self.pk
+        return 'question/%d/' % self.pk
 
     class Meta:
         db_table="qa_question"

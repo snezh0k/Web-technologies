@@ -82,8 +82,6 @@ def ask(request):
     else:
         form = AskForm()
     
-  #  csrf_token = csrf._get_new_csrf_key()
-    
     return render(request, 'question/ask.html',
                   {
                       'form' : form,

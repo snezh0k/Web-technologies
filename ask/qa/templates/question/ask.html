@@ -1,6 +1,6 @@
 <html>
   <body>
-    <form action="ask/" method="post">{% csrf_token %}
+    <form action="/ask/" method="post">{% csrf_token %}
       <fieldset>
 	{% for field in form %}
 	{{ field }}
