@@ -1,0 +1,17 @@
+<html>
+  <body>
+    {% csrf_token %}
+    {% for e in form.non_field_error %}
+        {{ e }}
+    {% endfor %}
+    <form method="post" action="/ask/">     
+      <fieldset>
+	{% for field in form %}
+	  <label> {{ field.label }} </label>
+	  {{ field }}
+	{% endfor %}
+      </fieldset>
+      <button type="submit"> Submit </button>
+    </form>
+  </body>
+</html>
