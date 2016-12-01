@@ -46,6 +46,7 @@ def show_question(request, qn):
             return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial={'question': qn})
+        return HttpResponse(status=200)
 
     return render(request, 'question/one.html',
                   {
@@ -82,6 +83,8 @@ def question_add(request):
             return HttpResponseRedirect(url)
     else:
         form = AskForm()
+        return HttpResponse(status=200)
+
     return render(request, 'question/ask.html',
                   {
                       'form' : form,
